@@ -1,13 +1,34 @@
+require("dotenv").config();
 const express = require("express");
-const registroRoutes = require("./registro");
-
 const app = express();
+
+
 app.use(express.json());
 
-// Rutas
-app.use("/", registroRoutes);
+const login = require("./login");
+const registro = require("./registro");
+const updatePass = require("./updatePass");
+const updateRol = require("./updateRol");
+const os = require("os");
 
-const PORT = 3000;
+app.use(login);
+app.use(registro);
+app.use(updatePass);
+app.use(updateRol);
+app.use(express.json());
+
+const PORT = process.env.PORT;
+
 app.listen(PORT, () => {
-    console.log("Servidor corriendo en http://localhost:" + PORT);
+    console.log("=================================");
+    console.log("Aplicación:", process.env.APP_NAME);
+    console.log("Puerto:", PORT);
+    console.log("Entorno:", process.env.NODE_ENV);
+    console.log("Sistema:", os.platform());
+    console.log("=================================");
 });
+
+app.listen(3000, () => {
+    console.log("Servidor corriendo en http://localhost:3000");
+});
+

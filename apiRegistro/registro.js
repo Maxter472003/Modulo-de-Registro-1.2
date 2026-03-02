@@ -21,7 +21,7 @@ router.post("/registro", async (req, res) => {
         }
 
         // Hash de contraseña
-        const hash = await bcrypt.hash(password, 10);
+        const hash = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
 
         // Insertar usuario
         db.run(
